@@ -25,7 +25,7 @@ app.post('/send', (req, res) => {
   const output = `
     <p>You have a new contact request</p>
     <h3>Contact Details</h3>
-    <ul>  
+    <ul>
       <li>Name: ${req.body.name}</li>
       <li>Company: ${req.body.company}</li>
       <li>Email: ${req.body.email}</li>
@@ -63,11 +63,17 @@ app.post('/send', (req, res) => {
       if (error) {
           return console.log(error);
       }
-      console.log('Message sent: %s', info.messageId);   
+      console.log('Message sent: %s', info.messageId);
       console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
       res.render('contact',{layout:false});
   });
   });
 
-app.listen(3000, () => console.log('Server started...'));
+  let port = process.env.PORT;
+  if(port == null || port == ""){
+    port=3000;
+  }
+  app.listen(port, function() {
+    console.log("app has started successfully");
+  });
